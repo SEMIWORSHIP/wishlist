@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Вишлист на день рождения</title>
+<meta name="description" content="Выбирай подарок, бронируй или скидывайся вместе с другими.">
+<meta property="og:title" content="Вишлист на день рождения">
+<meta property="og:description" content="Выбирай подарок, бронируй или скидывайся вместе с другими.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FF4A1C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23FF4A1C'/%3E%3Crect x='7' y='14' width='18' height='12' fill='%23141210'/%3E%3Crect x='5' y='10' width='22' height='5' fill='%23141210'/%3E%3Crect x='14.5' y='10' width='3' height='16' fill='%23C8F135'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:wght@800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="demoBar" class="demo-bar" hidden>Демо: всё сохраняется только в этом браузере. Firebase ещё не подключён.</div>
+
+<div id="guestView">
+  <header class="hero">
+    <div class="hero-top">
+      <span>Вишлист</span>
+      <span id="heroDate"></span>
+    </div>
+    <h1 id="heroTitle" class="hero-title"></h1>
+    <div class="hero-bottom">
+      <p id="heroText" class="hero-text"></p>
+      <a class="btn btn-ink" href="#gifts">Смотреть подарки <span aria-hidden="true">↓</span></a>
+    </div>
+    <div class="sticker" id="sticker" aria-hidden="true">
+      <svg class="sticker-ring" viewBox="0 0 200 200">
+        <defs><path id="ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+        <text><textPath href="#ring" textLength="486" lengthAdjust="spacing">С ДНЁМ РОЖДЕНИЯ • С ДНЁМ РОЖДЕНИЯ • </textPath></text>
+      </svg>
+      <div class="sticker-core">
+        <strong id="stickerNum">★</strong>
+        <span id="stickerLabel"></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+
+  <main id="gifts" class="wrap">
+    <div class="list-head">
+      <div>
+        <h2 class="section-title">Что я хочу</h2>
+        <p id="stats" class="stats" aria-live="polite"></p>
+      </div>
+      <div class="filter" role="group" aria-label="Фильтр подарков">
+        <button type="button" data-filter="all" aria-pressed="true">Все</button>
+        <button type="button" data-filter="free" aria-pressed="false">Свободные</button>
+        <button type="button" data-filter="chip" aria-pressed="false">Скидываются</button>
+      </div>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div id="gridEmpty" class="empty" hidden></div>
+  </main>
+
+  <section class="other">
+    <div class="wrap other-inner">
+      <div>
+        <h2 class="other-title">Есть своя идея?</h2>
+        <p class="other-text">Подаришь что-то не из списка? Отметься, чтобы все знали, что ты уже с подарком.</p>
+        <button type="button" id="otherBtn" class="btn btn-lime">Дарю что-то другое</button>
+      </div>
+      <ul id="otherList" class="other-list"></ul>
+    </div>
+  </section>
+
+  <footer class="foot wrap">
+    <a href="#admin">Вход для именинника</a>
+  </footer>
+</div>
+
+<div id="adminView" class="admin" hidden></div>
+
+<dialog id="sheet" class="sheet">
+  <button type="button" class="sheet-close" id="sheetClose" aria-label="Закрыть">×</button>
+  <div id="sheetBody"></div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
