@@ -1,0 +1,331 @@
+/* Цвета, кнопки, бегущая строка и стикер берутся из ../css/style.css */
+
+.inv-big {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(68px, 12vw, 170px);
+  line-height: .88;
+  text-transform: uppercase;
+}
+.inv-lead {
+  max-width: 30em;
+  margin: 18px 0 0;
+  font-weight: 500;
+  font-size: clamp(17px, 1.7vw, 22px);
+  line-height: 1.4;
+}
+
+/* ---------- Шапка ---------- */
+
+.inv-hero {
+  --hero-h: max(100svh, 600px);
+  position: relative;
+  height: var(--hero-h);
+  overflow: hidden;
+  background: var(--red);
+}
+.inv-top {
+  position: absolute;
+  z-index: 4;
+  top: 20px;
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.inv-num {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--hero-h) * .07);
+  left: 50%;
+  font-family: var(--display);
+  font-size: min(122vw, calc(var(--hero-h) * .62));
+  line-height: .86;
+  white-space: nowrap;
+  transform: translate(-50%, var(--shift, 0));
+  will-change: transform;
+}
+.inv-month {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.inv-me {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 50%;
+  width: max(100vw, calc(var(--hero-h) * .56));
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: translate(calc(-50% + var(--px, 0px)), var(--py, 0));
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.inv-me img { width: 100%; height: auto; }
+.inv-me.is-hop img { animation: hop .55s cubic-bezier(.3, 1.6, .5, 1); }
+.inv-me:focus-visible { outline: none; }
+.inv-me:focus-visible img { filter: drop-shadow(0 0 0 var(--ink)) brightness(1.06); }
+
+.inv-sticker {
+  z-index: 3;
+  top: 52px;
+  right: 12px;
+  width: clamp(104px, 15vw, 200px);
+}
+.inv-sticker .sticker-ring text { font-size: 12.6px; }
+.inv-sticker .sticker-core strong { font-size: clamp(25px, 3.6vw, 50px); }
+
+.inv-title {
+  position: absolute;
+  z-index: 3;
+  left: 12px;
+  right: 12px;
+  bottom: calc(22px + env(safe-area-inset-bottom));
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(50px, 15.4vw, 104px);
+  line-height: .92;
+  text-transform: uppercase;
+}
+.inv-title span {
+  max-width: 100%;
+  padding: .09em .16em .03em;
+  background: var(--lime);
+  animation: tape .7s .15s cubic-bezier(.16, 1, .3, 1) both;
+  transform-origin: left center;
+}
+.inv-title span:first-child { transform: rotate(-2deg); }
+.inv-title span:last-child { background: var(--ink); color: var(--paper); transform: rotate(1deg); animation-delay: .25s; }
+
+/* ---------- Зачем приходить ---------- */
+
+.inv-why { padding-top: clamp(52px, 8vw, 110px); }
+.inv-ticket-wrap { padding-top: clamp(32px, 5vw, 64px); padding-bottom: clamp(56px, 8vw, 110px); }
+
+.ticket {
+  display: grid;
+  max-width: 1040px;
+  border-radius: 26px;
+  background: var(--card);
+  transform: rotate(-1deg);
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: 0 24px 54px -34px rgba(20, 18, 16, .6);
+  /* вырезы на линии отрыва */
+  --notch: radial-gradient(circle 15px at var(--nx) var(--ny), transparent 98%, #000);
+}
+.ticket:hover { transform: rotate(0); }
+.ticket-main { padding: 26px 22px 24px; }
+.ticket-kicker {
+  margin: 0 0 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red-deep);
+}
+.ticket-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+  margin: 0 0 24px;
+}
+.ticket-facts .fact-wide { grid-column: 1 / -1; }
+.ticket-facts dt { font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+.ticket-facts dd {
+  margin: 2px 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(36px, 4.6vw, 54px);
+  line-height: .98;
+  text-transform: uppercase;
+}
+.ticket-route { width: 100%; }
+.ticket-stub {
+  position: relative;
+  display: grid;
+  padding: 20px 22px 24px;
+  border-top: 3px dashed var(--line);
+}
+.ticket-stub img { width: 100%; height: auto; border-radius: 16px; }
+.ticket-stub p {
+  margin: 12px 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* ---------- Отсчёт ---------- */
+
+.inv-count {
+  padding-block: clamp(48px, 7vw, 96px);
+  background: var(--ink);
+  color: var(--paper);
+}
+.inv-count-title { margin: 0 0 20px; font-size: clamp(16px, 1.6vw, 20px); font-weight: 600; }
+.count {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 12px;
+}
+.count > div { display: grid; }
+.count b {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(104px, 17vw, 240px);
+  line-height: .86;
+  color: var(--lime);
+  font-variant-numeric: tabular-nums;
+}
+.count span { font-size: 14px; font-weight: 600; color: #CFC9BD; }
+
+/* ---------- Что взять ---------- */
+
+.inv-bring {
+  display: grid;
+  gap: 30px;
+  padding-block: clamp(56px, 8vw, 110px);
+}
+.bring { display: grid; gap: 10px; align-content: start; }
+.bring label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 76px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: var(--card);
+  cursor: pointer;
+  transition: background-color .2s, transform .18s cubic-bezier(.2, .8, .2, 1);
+}
+.bring label:hover { transform: translateX(4px); }
+.bring input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.bring-box {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--ink);
+  border-radius: 11px;
+  background: var(--card) center / 22px no-repeat;
+  transition: transform .25s cubic-bezier(.2, 1.6, .4, 1), background-color .15s;
+}
+.bring input:focus-visible + .bring-box { outline: 3px solid var(--ink); outline-offset: 3px; }
+.bring input:checked + .bring-box {
+  background-color: var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C8F135' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 13l5 5L20 6'/%3E%3C/svg%3E");
+  transform: rotate(-6deg) scale(1.06);
+}
+.bring label:has(input:checked) { background: var(--lime); }
+.bring-text { display: grid; min-width: 0; }
+.bring-text b {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.bring-text small { margin-top: 3px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+.bring label:has(input:checked) small { color: var(--ink); }
+
+/* ---------- Вишлист ---------- */
+
+.inv-gift { background: var(--lime); }
+.inv-gift-inner {
+  display: grid;
+  gap: 8px;
+  padding-block: clamp(52px, 8vw, 110px);
+}
+.inv-gift .inv-lead { margin-bottom: 22px; }
+
+/* ---------- Финал ---------- */
+
+.inv-end-me { display: none; }
+.inv-end {
+  position: relative;
+  padding: clamp(44px, 7vw, 90px) var(--gutter) calc(40px + env(safe-area-inset-bottom));
+  background: var(--red);
+  overflow: hidden;
+}
+.inv-end-big {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: min(40vw, 480px);
+  line-height: .82;
+  text-transform: uppercase;
+}
+.inv-end-small { margin: 22px 0 0; font-size: clamp(16px, 1.6vw, 20px); font-weight: 700; }
+
+@keyframes hop {
+  0% { transform: translateY(0) rotate(0); }
+  45% { transform: translateY(-7%) rotate(-3deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+@keyframes tape { from { opacity: 0; translate: -24px 0; } to { opacity: 1; translate: 0 0; } }
+
+/* ---------- Большие экраны ---------- */
+
+@media (min-width: 760px) {
+  .count { grid-template-columns: repeat(4, 1fr); }
+  .inv-why { max-width: 1320px; }
+  .ticket { grid-template-columns: 1fr minmax(240px, 32%); }
+  .ticket-main { padding: 34px 36px 32px; }
+  .ticket-stub { padding: 26px; border-top: 0; border-left: 3px dashed var(--line); align-content: center; }
+  .ticket-route { width: auto; }
+}
+
+/* Экран не вытянут вверх: фото во всю ширину не влезло бы по высоте и срезало бы голову. */
+@media (min-width: 900px), (min-aspect-ratio: 4/5) {
+  .inv-hero {
+    --me-w: min(58vw, calc(var(--hero-h) * .78));
+    --num-f: min(70vw, calc(var(--hero-h) * 1.25));
+  }
+  .inv-num {
+    top: auto;
+    bottom: calc(var(--hero-h) * -.03);
+    /* Голова заходит только на край тройки, чтобы цифры читались как 23. */
+    left: calc(100vw - var(--me-w) * .69 - var(--num-f) * .67);
+    font-size: var(--num-f);
+    transform: translateY(var(--shift, 0));
+  }
+  .inv-me {
+    left: auto;
+    right: 0;
+    width: var(--me-w);
+    transform: translate(var(--px, 0px), var(--py, 0));
+  }
+  .inv-sticker { top: 74px; right: auto; left: var(--gutter); }
+  .inv-title {
+    left: var(--gutter);
+    right: auto;
+    bottom: 38px;
+    font-size: clamp(50px, 7.4vw, 124px);
+  }
+}
+
+@media (min-width: 900px) {
+  .inv-bring .inv-big, .inv-gift .inv-big { font-size: clamp(68px, 10vw, 146px); }
+  .inv-end-me {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(44vw, 620px);
+    height: auto;
+  }
+  .inv-bring { grid-template-columns: 1fr 1fr; gap: 56px; }
+  .inv-gift-inner { grid-template-columns: 1.4fr 1fr; align-items: end; gap: 56px; }
+}
