@@ -308,6 +308,15 @@ button, input, textarea { font: inherit; color: inherit; }
   line-height: 1;
   transition: filter .4s, opacity .4s;
 }
+.photo-wait, .skel-line {
+  background: #EAE4D8;
+  animation: wait-pulse 1.1s ease-in-out infinite alternate;
+}
+.photo-wait { height: 100%; }
+.skel-line { height: 26px; border-radius: 8px; }
+.skel-line.is-short { width: 45%; margin-top: 10px; }
+@keyframes wait-pulse { to { background: #D9D2C4; } }
+
 .tone-0 { background: var(--lime); color: var(--ink); }
 .tone-1 { background: var(--ink); color: var(--paper); }
 .tone-2 { background: var(--red); color: var(--ink); }
@@ -723,4 +732,5 @@ button, input, textarea { font: inherit; color: inherit; }
     transition-duration: .01ms !important;
   }
   .card { opacity: 1; transform: none; }
+  .photo-wait, .skel-line { animation: none; }
 }

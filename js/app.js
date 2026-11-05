@@ -261,11 +261,13 @@ function buildCard(gift, index) {
 
   const photo = gift.photo
     ? h('img', { src: gift.photo, alt: gift.title, loading: 'lazy', decoding: 'async' })
-    : h('div', { class: `photo-empty tone-${index % 3}`, 'aria-hidden': 'true' }, number);
+    : gift.photoPending
+      ? h('div', { class: 'photo-wait', 'aria-hidden': 'true' })
+      : h('div', { class: `photo-empty tone-${index % 3}`, 'aria-hidden': 'true' }, number);
 
   const media = h('div', { class: 'card-media' },
     photo,
-    gift.photo ? h('span', { class: 'card-num' }, number) : null,
+    gift.photo || gift.photoPending ? h('span', { class: 'card-num' }, number) : null,
     st.kind === 'booked'
       ? h('div', { class: 'stamp' }, h('small', {}, 'Дарит'), h('b', {}, st.book.name))
       : null);
@@ -342,6 +344,7 @@ function cancelClaim(claim, title) {
 function renderGrid() {
   const grid = $('#grid');
   const gifts = sortedGifts();
+  if (!state.ready && gifts.length === 0) return; // пока идёт загрузка, в разметке стоят заглушки
   const visible = [];
 
   gifts.forEach((gift, index) => {
@@ -689,6 +692,11 @@ function renderAdmin() {
 
   const gifts = sortedGifts();
   const list = $('#adminGifts');
+  // Правка подарка без загруженного фото стёрла бы его в базе, поэтому ждём полный список.
+  if (state.giftsFull === false) {
+    list.replaceChildren(h('li', { class: 'muted' }, 'Загружаю подарки…'));
+    return;
+  }
   list.replaceChildren(...(gifts.length
     ? gifts.map((g, i) => adminGiftRow(g, i, gifts))
     : [h('li', { class: 'empty' }, 'Пока пусто. Добавь первый подарок.')]));
@@ -738,6 +746,7 @@ async function start() {
   buildMarquee();
   renderHero();
   document.fonts?.ready.then(fitHeroTitle);
+  document.fonts?.addEventListener('loadingdone', fitHeroTitle);
 
   try {
     store = await createStore();
